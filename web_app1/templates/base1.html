@@ -1,0 +1,142 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>University</title>
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+      <style>
+    .container {
+      margin: 80px;
+    }
+
+    .button_box {
+      margin-top: 40px;
+    }
+
+    .button {
+      background-color: #4CAF50; /* Green */
+      border: none;
+      color: white;
+      padding: 10px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border-radius: 25px;
+    }
+
+    .button1 {
+      background-color: white;
+      color: black;
+      border: 2px solid #4CAF50;
+    }
+
+    .button_save {
+      background-color: white;
+      color: black;
+      border: 2px solid blue;
+    }
+
+    .button_cancel {
+      background-color: white;
+      color: black;
+      border: 2px solid red;
+    }
+    .flex_row {
+      display: flex;
+      flex-direction: row;
+      margin-top: 20px;
+    }
+
+    .new_box {
+      margin-top: 30px;
+    }
+    .category_box {
+      width: 200px;
+      /* background-color: red; */
+      justify-content: space-between;
+    }
+
+    .title {
+      font-size: 20px;
+    }
+    .one{
+    display:none;
+    }
+     .display_one{
+    display:block;
+    }
+  </style>
+    <!-- jQuery and Bootstrap CSS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css">
+
+    <!-- HTMX -->
+    <script src="https://unpkg.com/htmx.org@1.6.0"></script>
+    <script>
+       function handleclick(){
+             document.getElementById("one").classList.add('display_one')
+       }
+    </script>
+</head>
+<body>
+    <main class="container">
+
+    <div>
+        <h4>Site Setting</h4>
+        <table class="table table-fixed">
+          <thead>
+            <tr>
+              <th class="col-xs-2">Animal</th><th class="col-xs-8">Breed</th><th class="col-xs-2">Date</th><th class="col-xs-2"></th>
+            </tr>
+          </thead>
+          <tbody>
+          {%for item in animal_query%}
+            <tr>
+              <td class="col-xs-2">{{item.animal}}</td><td class="col-xs-8">{{item.breed}}</td><td class="col-xs-2">{{item.date}}</td><td><a href="{%url 'delete-item' id=item.id%}" >DELETE</a></td>
+            </tr>
+          </tbody>
+            {% endfor %}
+        </table>
+
+
+        <div class="button_box">
+        <button class="button button1"  onclick="handleclick()">New</button>
+      </div>
+      </div>
+    <form method ="post" id="personForm" enctype="multipart/form-data" data-cities-url ="{% url 'modules' %}">
+          {% csrf_token %}
+            {{ form.as_p }}
+    <div class="container mt-4 one" id="one">
+
+        {% block content %}
+
+        {% endblock %}
+                              <div class="flex_row category_box">
+          <div class="title">Date</div>
+          <input name="date" type="date"/>
+                            {{example_form.my_date_field}}
+        </div>
+         <div class="button_box">
+            <button type="submit" class='button button_save'>Save</button>
+        </div>
+        <div class="button_box">
+          <button type="button" class="button button_cancel" onclick="window.location.href='/'">cancel</button>
+        </div>
+    </div>
+    </form>
+
+    </main>
+</body>
+</html>

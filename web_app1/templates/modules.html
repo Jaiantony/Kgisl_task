@@ -1,0 +1,6 @@
+<select class ="custom-select mb-4" name="breed">
+            <option  selected>--Select Breed--</option>
+            {% for breed in breed_data%}
+                <option value="{{breed.id}}">{{breed.name}}</option>
+            {%endfor %}
+          </select>

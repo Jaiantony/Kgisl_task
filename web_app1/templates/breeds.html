@@ -1,0 +1,18 @@
+{% extends 'base1.html' %}
+
+{% block content %}
+<select class ="custom-select mb-4"
+        name="animal"
+        hx-get="{% url 'modules' %}"
+        hx-trigger = "change"
+        hx-target ="#modules"
+>
+            <option  selected>--Select Animal--</option>
+            {% for animal in animals_data%}
+                <option value="{{animal.id}}">{{animal.name}}</option>
+            {%endfor %}
+          </select>
+    <div id ="modules">
+        {%include 'modules.html'%}
+    </div>
+{% endblock %}
